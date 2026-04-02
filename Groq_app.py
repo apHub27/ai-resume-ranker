@@ -2,7 +2,9 @@ import streamlit as st
 from groq import Groq
 from PyPDF2 import PdfReader
 
-GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+try:
+    # Hum direct key nahi likh rahe, Streamlit ke locker (secrets) se maang rahe hain
+    GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
     client = Groq(api_key=GROQ_API_KEY)
 except Exception as e:
     st.error("API Key nahi mili! Streamlit Cloud ke 'Secrets' mein key dalo.")
@@ -16,10 +18,7 @@ def extract_text_from_pdf(pdf_file):
     return text
 
 
-try:
-    client = Groq(api_key=GROQ_API_KEY)
-except Exception as e:
-    st.error(f"Groq setup error: {e}")
+
 
 # 2. UI
 st.title("⚡ Groq AI Resume Ranker")    
